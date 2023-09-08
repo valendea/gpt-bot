@@ -1,20 +1,38 @@
-import OpenAI from "openai";
-import dotenv from "dotenv";
-dotenv.config();
-
-const openai = new OpenAI({
-  apiKey: process.env.GPT_API_KEY,
-});
+import openai from "./config/openai.js";
+import readlineSync from "readline-sync";
+import colors from "colors";
 
 async function main() {
-  const completion = await openai.chat.completions.create({
-    messages: [
-      { role: "user", content: "What is the capital city of Australia?" },
-    ],
-    model: "gpt-3.5-turbo",
-  });
+  console.log(colors.bold.green("Welcome to Chatbot!"));
+  console.log(colors.bold.green("You can start chatting with the bot"));
 
-  console.log(completion.choices[0].message.content);
+  const chatHistory = [];
+
+  while (true) {
+    const userInput = readlineSync.question(colors.yellow("You: "));
+
+    try {
+      chatHistory.push({ role: "user", content: userInput });
+
+      const completion = await openai.chat.completions.create({
+        messages: chatHistory,
+        model: "gpt-4",
+      });
+
+      const completionText = completion.choices[0].message.content;
+
+      if (userInput.toLowerCase() === "exit") {
+        console.log(colors.green("Bot: ") + completionText);
+        return;
+      }
+
+      console.log(colors.green("Bot: ") + completionText);
+
+      chatHistory.push({ role: "assistant", content: completionText });
+    } catch (error) {
+      console.error(colors.red(error));
+    }
+  }
 }
 
 main();
