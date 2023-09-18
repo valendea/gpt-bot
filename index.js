@@ -3,10 +3,14 @@ import readlineSync from "readline-sync";
 import colors from "colors";
 
 async function main() {
-  console.log(colors.bold.green("Welcome to Chatbot!"));
-  console.log(colors.bold.green("You can start chatting with the bot"));
+  console.log(
+    colors.bold.blue(
+      "Hello there! ChatBot, fueled by ChatGPT magic, is at your service."
+    )
+  );
+  console.log(colors.bold.blue("What's on your mind?"));
 
-  const chatHistory = [];
+  let chatHistory = [];
 
   while (true) {
     const userInput = readlineSync.question(colors.yellow("You: "));
@@ -21,7 +25,7 @@ async function main() {
 
       const completionText = completion.choices[0].message.content;
 
-      if (userInput.toLowerCase() === "exit") {
+      if (userInput.trim().toLowerCase() === "exit") {
         console.log(colors.green("Bot: ") + completionText);
         return;
       }
