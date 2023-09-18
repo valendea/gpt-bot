@@ -41,4 +41,4 @@ npm start
 
 ## Usage
 
-Start a conversation with the chatbot by simply typing your message into the input field and pressing enter. To terminate the session, simply type `exit`.
+Start a conversation with the chatbot by simply typing your message and pressing enter. To terminate the session, simply type `exit`.

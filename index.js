@@ -20,7 +20,7 @@ async function main() {
 
       const completion = await openai.chat.completions.create({
         messages: chatHistory,
-        model: "gpt-4",
+        model: "gpt-3.5-turbo",
       });
 
       const completionText = completion.choices[0].message.content;
